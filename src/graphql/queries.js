@@ -1,61 +1,87 @@
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client";
 
-
-
-const GET_BLOGS_INFO = gql `
-query {
-  posts {
-    author {
-      ... on Author {
+const GET_BLOGS_INFO = gql`
+  query {
+    posts {
+      author {
         name
         avatar {
           url
         }
       }
-    }
-    coverPhoto {
-      url
-    }
-    slug
-    id
-    title
-  }
-}    
-`
-const GET_AUTHORS_INFO = gql `
-  query  {
-    authors {
-      avatar {
-        url
-      }
-      name
-      id
+      title
       slug
-    }
-  }
-
-`
-const GET_AUTHOR_INFO = gql `
-  query getAuthorInfo($slug: String) {
-    author(where: {slug: $slug}) {
-      avatar {
-        url
-      }
-      name
-      field
-      description {
-        html
-      }
-    }
-    posts {
+      id
       coverPhoto {
         url
       }
-      id
-      slug
-      title
     }
   }
-`
+`;
 
-export {GET_BLOGS_INFO, GET_AUTHORS_INFO, GET_AUTHOR_INFO};
+const GET_AUTHORS_INFO = gql`
+  query {
+    authors {
+      id
+      name
+      slug
+      avatar {
+        url
+      }
+    }
+  }
+`;
+
+const GET_AUTHOR_INFO = gql`
+  query getAuthorInfo($slug: String!) {
+    author(where: { slug: $slug }) {
+      avatar {
+        url
+      }
+      field
+      name
+      description {
+        html
+      }
+      posts {
+        coverPhoto {
+          url
+        }
+        id
+        slug
+        title
+      }
+    }
+  }
+`;
+
+const GET_POST_INFO = gql`
+  query getPost($slug: String!) {
+    post(where: { slug: $slug }) {
+      author {
+        avatar {
+          url
+        }
+        name
+        field
+      }
+      content {
+        html
+      }
+      title
+      coverPhoto {
+        url
+      }
+    }
+  }
+`;
+
+
+
+export {
+  GET_BLOGS_INFO,
+  GET_AUTHORS_INFO,
+  GET_AUTHOR_INFO,
+  GET_POST_INFO,
+
+};
