@@ -1,12 +1,15 @@
 import { gql } from "@apollo/client";
 
-const GET_BLOGS_INFO = gql`
-  query {
+
+const GET_BLOGS_INFO = gql `
+query  {
     posts {
       author {
-        name
-        avatar {
-          url
+        ... on Author {
+          name
+          avatar {
+            url
+          }
         }
       }
       title
@@ -17,53 +20,56 @@ const GET_BLOGS_INFO = gql`
       }
     }
   }
-`;
+  
+`
 
-const GET_AUTHORS_INFO = gql`
-  query {
-    authors {
+const GET_AUTHORS_INFO = gql `
+query  {
+  authors {
+    id
+    name
+    slug
+    avatar {
+      url
+    }
+  }
+}
+`
+
+const GET_AUTHOR_INFO = gql `
+query getAuthorInfo($slug: String!) {
+  author(where: {slug: $slug}) {
+    avatar {
+      url
+    }
+    name
+    field
+    description {
+      html
+    }
+    posts {
+      coverPhoto {
+        url
+      }
       id
-      name
       slug
-      avatar {
-        url
-      }
+      title
     }
   }
-`;
+}
+`
 
-const GET_AUTHOR_INFO = gql`
-  query getAuthorInfo($slug: String!) {
-    author(where: { slug: $slug }) {
-      avatar {
-        url
-      }
-      field
-      name
-      description {
-        html
-      }
-      posts {
-        coverPhoto {
-          url
-        }
-        id
-        slug
-        title
-      }
-    }
-  }
-`;
-
-const GET_POST_INFO = gql`
+const GET_POST_INFO = gql `
   query getPost($slug: String!) {
-    post(where: { slug: $slug }) {
+    post(where: {slug: $slug}) {
       author {
-        avatar {
-          url
+        ... on Author {
+          name
+          avatar {
+            url
+          }
+          field
         }
-        name
-        field
       }
       content {
         html
@@ -74,14 +80,16 @@ const GET_POST_INFO = gql`
       }
     }
   }
-`;
+`
 
+const GET_POST_COMMENT= gql `
+query getPostComment($slug: String!) {
+  comments(where: {post: {Post: {slug: $slug}}}) {
+    id
+    name
+    text
+  }
+}
+`
 
-
-export {
-  GET_BLOGS_INFO,
-  GET_AUTHORS_INFO,
-  GET_AUTHOR_INFO,
-  GET_POST_INFO,
-
-};
+export {GET_BLOGS_INFO, GET_AUTHORS_INFO, GET_AUTHOR_INFO, GET_POST_INFO, GET_POST_COMMENT};
