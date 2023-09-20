@@ -10,8 +10,6 @@ import TextField from '@mui/material/TextField';
 import { useMutation } from '@apollo/client';
 import { SEND_COMMENT } from '../../graphql/mutations';
 
-//Defualt Css
-import { inputLabelClasses } from "@mui/material/InputLabel";
 
 
 function CommentForm({slug}) {
@@ -63,20 +61,6 @@ function CommentForm({slug}) {
             <Grid item xs={12} m={2}>
                 <TextField     
                     label="ایمیل"
-                    InputLabelProps={{
-                        sx: {
-                          // set the color of the label when not shrinked
-                          color: "red",
-                          right: "30px",
-                          [`&.${inputLabelClasses.shrink}`]: {
-                            // set the color of the label when shrinked (usually when the TextField is focused)
-                            
-                            transformOrigin: 'top right',
-                            transform: 'translateX(18px) translateY(-10px)'
-                            
-                          }
-                        }
-                      }}
                     variant="outlined" 
                     sx={{width: "100%"}}
                     value={email}

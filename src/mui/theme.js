@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material";
 
+
 const theme = createTheme({
     typography: {
         fontFamily: `"YekanBakh", "Roboto", "Arial"`,
@@ -10,6 +11,7 @@ const theme = createTheme({
         fontWeightHeavy: "800",
         fontWeightFat: "900",
     },
+    direction: 'rtl',
 
 })
 
